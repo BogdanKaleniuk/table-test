@@ -1,12 +1,12 @@
 import React from "react";
 
-const DummyList = () => {
+const DummyList = ({ title, order }) => {
   return (
     <div>
       <table>
         <tr>
-          <td>Dummy</td>
-          <td>List</td>
+          <td>Title: {title}</td>
+          <td>Order: {order}</td>
         </tr>
       </table>
     </div>

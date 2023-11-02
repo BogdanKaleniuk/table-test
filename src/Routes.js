@@ -1,15 +1,10 @@
-import React, { useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Routes,
-  Outlet,
-} from "react-router-dom";
-import DummyTable from "./DummyTable";
-import DummyChart from "./DummyChart";
-import DummyList from "./DummyList";
 import tabsData from "./tabs.json";
+import React, { useEffect, useState, Suspense } from "react";
+import { Route, Link, Routes, Outlet } from "react-router-dom";
+
+const DummyTable = React.lazy(() => import("./DummyTable"));
+const DummyChart = React.lazy(() => import("./DummyChart"));
+const DummyList = React.lazy(() => import("./DummyList"));
 
 const TabsComponent = () => {
   const [tabs, setTabs] = useState([]);
@@ -19,7 +14,7 @@ const TabsComponent = () => {
   }, []);
 
   return (
-    <Router>
+    <div>
       <ul>
         {tabs.map((tab) => (
           <li key={tab.id}>
@@ -27,19 +22,27 @@ const TabsComponent = () => {
           </li>
         ))}
       </ul>
-      <Outlet />
+
       <Routes>
         {tabs.map((tab) => (
           <Route
             key={tab.id}
             path={`/${tab.id}`}
-            element={<DummyTable title={tab.title} order={tab.order} />}
+            element={
+              <Suspense fallback={<div>Loading...</div>}>
+                {tab.id === "dummyTable" ? (
+                  <DummyTable title={tab.title} order={tab.order} />
+                ) : tab.id === "dummyChart" ? (
+                  <DummyChart title={tab.title} order={tab.order} />
+                ) : tab.id === "dummyList" ? (
+                  <DummyList title={tab.title} order={tab.order} />
+                ) : null}
+              </Suspense>
+            }
           />
         ))}
-        <Route path="/dummyChart" element={<DummyChart />} />
-        <Route path="/dummyList" element={<DummyList />} />
       </Routes>
-    </Router>
+    </div>
   );
 };
 

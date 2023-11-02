@@ -1,16 +1,13 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 
-const DummyChart = () => {
-
-    
-
+const DummyChart = ({ title, order }) => {
   return (
     <div>
       <table>
         <tr>
-          <td>Dummy</td>
-          <td>Chart</td>
+          <td>Title: {title}</td>
+          <td>Order: {order}</td>
         </tr>
       </table>
     </div>

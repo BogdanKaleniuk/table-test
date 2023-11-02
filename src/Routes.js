@@ -5,7 +5,6 @@ import {
   Link,
   Routes,
   Outlet,
-  useLocation,
 } from "react-router-dom";
 import DummyTable from "./DummyTable";
 import DummyChart from "./DummyChart";
